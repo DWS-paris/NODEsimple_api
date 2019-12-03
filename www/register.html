@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>Welcome on NodeJS simple API</h1>
+        <h2>Register</h2>
+
+        <form action="#">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required minlength="5">
+
+            <label for="username">User name</label>
+            <input type="text" id="username" name="username" required  minlength="2">
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required  minlength="5">
+
+            <button type="submit">Register</button>
+        </form>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                // Capter la soumission du formulaire
+                document.querySelector('form').addEventListener('submit', (event) => {
+                    // Bloquer l'événement
+                    event.preventDefault();
+
+                    // Vérifier les champs
+                    if(
+                        document.querySelector('#email').value.length >= 5 &&
+                        document.querySelector('#username').value.length >= 2 &&
+                        document.querySelector('#password').value.length >= 5
+                    ){
+                        // Envoyer les données vers le serveur (API)
+                        fetch('/api/users/', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                email: document.querySelector('#email').value,
+                                username: document.querySelector('#username').value,
+                                password: document.querySelector('#password').value,
+                            }),
+                            headers: { 'Content-Type': 'application/json' }
+                        })
+                        .then( response => {
+                            console.log(response)
+                        } )
+                        .then( data => console.log(data))
+                        .catch( err => console.error(err) )
+                    }
+                })
+
+
+            })
+        </script>
+    </body>
+</html>
